@@ -195,3 +195,82 @@ footer{
     font-weight:bold;
     border-radius:25px;
 }
+
+/* ===== Responsive Design for Mobile & Laptop ===== */
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Food cards layout */
+.food-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.food-card {
+    width: 280px;
+    padding: 15px;
+}
+
+/* Laptop / Desktop */
+@media (min-width: 768px) {
+
+    .container {
+        width: 85%;
+        margin: auto;
+    }
+
+    .food-card {
+        width: 280px;
+    }
+}
+
+
+/* Mobile */
+@media (max-width: 767px) {
+
+    nav {
+        text-align: center;
+    }
+
+    nav a {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .food-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .food-card {
+        width: 100%;
+        max-width: 350px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+    }
+}
