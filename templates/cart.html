@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart</title>
+</head>
+<body>
+
+<h1>🛒 Your Cart</h1>
+
+{% if cart %}
+    <ul>
+    {% for item in cart %}
+<li>
+    {{ item.name }}<br>
+Price: ₹{{ item.price }}<br>
+<a href="{{ url_for('decrease_quantity', item_name=item.name) }}">
+    <button>-</button>
+</a>
+
+<strong>{{ item.quantity }}</strong>
+
+<a href="{{ url_for('increase_quantity', item_name=item.name) }}">
+    <button>+</button>
+</a>
+Subtotal: ₹{{ item.price * item.quantity }}
+
+    <a href="{{ url_for('remove_from_cart', item_name=item.name) }}">
+        <button>Remove</button>
+    </a>
+</li>
+{% endfor %}
+    </ul>
+
+    <h3>Total: ₹{{ total }}</h3>
+    <a href="{{ url_for('checkout') }}">
+    <button>Proceed to Checkout</button>
+</a>
+
+{% else %}
+    <h3>Your cart is empty.</h3>
+{% endif %}
+
+<a href="{{ url_for('Menu') }}">
+    <button>Back to Menu</button>
+</a>
+
+</body>
+</html>

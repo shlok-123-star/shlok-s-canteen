@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Successful</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f4f4;
+            text-align:center;
+            padding-top:60px;
+        }
+
+        .box{
+            width:400px;
+            margin:auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 15px rgba(0,0,0,0.2);
+        }
+
+        h1{
+            color:green;
+        }
+
+        p{
+            font-size:18px;
+        }
+
+        button{
+            background:green;
+            color:white;
+            border:none;
+            padding:12px 25px;
+            font-size:18px;
+            border-radius:6px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:darkgreen;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>✅ Order Successful!</h1>
+
+<h2>Thank You, {{ customer_name }}</h2>
+
+<p><strong>Table Number:</strong> {{ table_number }}</p>
+
+<p><strong>Payment Method:</strong> {{ payment }}</p>
+
+<p>Your delicious food is being prepared. 🍔🍕</p>
+
+<h3>Estimated Time: 15–20 Minutes</h3>
+
+<a href="{{ url_for('Home') }}">
+    <button>Back to Home</button>
+</a>
+
+</div>
+
+</body>
+</html>

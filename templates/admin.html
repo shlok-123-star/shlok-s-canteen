@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+<h1>📋 Admin Dashboard</h1>
+
+<h2>Total Orders: {{ total_orders }}</h2>
+<h2>Total Revenue: ₹{{ total_revenue }}</h2>
+
+<hr>
+
+{% if orders %}
+
+    {% for order in orders %}
+
+    <hr>
+
+    <h3>Customer: {{ order["customer_name"] }}</h3>
+
+    <p>Table Number: {{ order["table_number"] }}</p>
+
+    <p>Payment: {{ order["payment"] }}</p>
+
+    <h4>Ordered Items:</h4>
+
+    <ul>
+    {% for item in order["items"] %}
+        <li>{{ item.name }} × {{ item.quantity }}</li>
+    {% endfor %}
+    </ul>
+
+    {% endfor %}
+
+{% else %}
+
+<h3>No Orders Yet</h3>
+
+{% endif %}
+
+</body>
+</html>

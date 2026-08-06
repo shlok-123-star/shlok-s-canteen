@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<h1>Checkout Page</h1>
+
+<h2>Your Order</h2>
+
+<p>Food: Veg Burger</p>
+<p>Quantity: 2</p>
+<p>Total: ₹100</p>
+
+<form action="{{ url_for('place_order') }}" method="POST">
+<label>Customer Name:</label>
+<input type="text" name="customer_name" required>
+
+<br><br>
+
+<label>Table Number:</label>
+<input type="number" name="table_number" required>
+
+<br><br>
+
+<label>Select Payment Method:</label>
+<br>
+
+<input type="radio" name="payment" value="Cash on Counter" required>
+Cash on Counter
+
+<br>
+
+<input type="radio" name="payment" value="UPI">
+UPI
+
+<br><br>
+
+<button type="submit">
+Place Order
+</button>
+
+</form>
+
+</body>
+</html>

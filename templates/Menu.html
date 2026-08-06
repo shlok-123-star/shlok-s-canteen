@@ -1,0 +1,113 @@
+{% extends 'Base.html' %}
+
+{% block title %}Menu{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h1 class="text-center mb-4">🍽 Our Menu</h1>
+
+<div class="row mb-4">
+    <div class="col-md-6 mx-auto">
+        <input type="text"
+               class="form-control form-control-lg"
+               placeholder="🔍 Search your favourite food...">
+    </div>
+</div>
+
+<h2>Fast Food</h2>
+
+<div class="row">
+
+{% for food in food_menu %}
+
+<div class="col-md-3 mb-4">
+
+    <div class="card h-100 shadow">
+
+        <img src="{{ url_for('static', filename='images/' + food.image) }}"
+             class="food-img"
+             alt="{{ food.name }}">
+
+        <div class="card-body">
+
+            <h5>{{ food.name }}</h5>
+
+            <h5 class="text-success fw-bold">
+    ₹{{ food.price }}
+</h5>
+
+<span class="badge bg-success">
+    ⭐ 4.8
+</span>
+
+            <a href="{{ url_for('add_to_cart', item_name=food.name) }}">
+                <button class="btn btn-success w-100 mt-3">
+    🛒 Add to Cart
+</button>
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<h2 class="mt-5">🥤 Milkshakes & Drinks</h2>
+
+<div class="row">
+
+{% for drink in Milkshake_menu %}
+
+<div class="col-md-3 mb-4">
+
+    <div class="card h-100 shadow">
+
+        <img src="{{ url_for('static', filename='images/' + drink.image) }}"
+             class="food-img"
+             alt="{{ drink.name }}">
+
+        <div class="card-body">
+
+            <h5>{{ drink.name }}</h5>
+
+            <p>₹{{ drink.price }}</p>
+
+            <a href="{{ url_for('add_to_cart', item_name=drink.name) }}">
+                <button class="btn btn-success w-100">
+                    🛒 Add to Cart
+                </button>
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<br><br>
+
+<div class="text-center">
+
+    <a href="{{ url_for('cart_page') }}" class="btn btn-warning">
+        🛒 View Cart
+    </a>
+
+    <a href="{{ url_for('admin') }}" class="btn btn-dark">
+        📋 Admin Dashboard
+    </a>
+
+</div>
+
+</div>
+
+{% endblock %}

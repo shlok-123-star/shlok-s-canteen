@@ -1,0 +1,77 @@
+{% extends 'Base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<div class="hero">
+    <h1>🍔 Welcome to Shlok's Canteen</h1>
+
+    <p>Fresh Food • Fast Service • Best Quality</p>
+
+    <a href="{{ url_for('Menu') }}" class="btn btn-warning btn-lg mt-3">
+        🍽 Order Now
+    </a>
+</div>
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">🔥 Today's Specials</h2>
+
+    <div class="row">
+
+        {% for food in daily_specials %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow h-100 text-center">
+
+                <div class="card-body">
+
+                    <h4>{{ food.name }}</h4>
+
+                    <h3 class="text-success">₹{{ food.price }}</h3>
+
+                    <button class="btn btn-success mt-3">
+                        Order Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<div class="container mt-5">
+
+    <div class="row text-center">
+
+        <div class="col-md-4">
+            <h2>🚚</h2>
+            <h4>Fast Delivery</h4>
+            <p>Food delivered within 15–20 minutes.</p>
+        </div>
+
+        <div class="col-md-4">
+            <h2>🍔</h2>
+            <h4>Fresh Food</h4>
+            <p>Prepared fresh after every order.</p>
+        </div>
+
+        <div class="col-md-4">
+            <h2>💳</h2>
+            <h4>Easy Payment</h4>
+            <p>UPI • Cash • Card Supported.</p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
