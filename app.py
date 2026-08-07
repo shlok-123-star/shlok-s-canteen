@@ -181,6 +181,13 @@ def place_order():
     )
 @app.route('/admin')
 def admin():
+
+    if 'user' not in session:
+        return redirect(url_for('login'))
+
+    if session['user'] != "admin":
+        return "❌ Access Denied! Only Admin can access this page."
+
     total_orders = len(orders)
 
     total_revenue = 0
