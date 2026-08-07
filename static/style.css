@@ -254,3 +254,45 @@ footer{
 
 }
 }
+
+.about-hero{
+
+    background:linear-gradient(135deg,#212529,#343a40);
+
+    color:white;
+
+    padding:60px 20px;
+
+    border-radius:25px;
+
+}
+
+
+.about-hero h1{
+
+    font-size:45px;
+    font-weight:bold;
+
+}
+
+
+.about-card{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+    transition:0.3s;
+
+}
+
+
+.about-card:hover{
+
+    transform:translateY(-10px);
+
+}

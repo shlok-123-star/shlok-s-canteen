@@ -1,16 +1,129 @@
 {% extends 'Base.html' %}
-{% block title %} About Us {% endblock %}
+
+{% block title %}About Us{% endblock %}
 
 {% block content %}
 
-<h1>ℹ️ About Smart Canteen</h1>
+<div class="container mt-5">
 
-<p>Welcome to <strong>Smart Canteen</strong>, your trusted campus food destination.</p>
+    <div class="about-hero text-center">
 
-<p>Our goal is to provide students, faculty, and staff with fresh, hygienic, delicious, and affordable meals in a clean and friendly environment.</p>
+        <h1>🍔 Welcome to Shlok's Canteen</h1>
 
-<p>We are committed to delivering quality food, excellent service, and a convenient dining experience every day.</p>
+        <p>
+            Fresh Food • Fast Service • Best Quality
+        </p>
 
-<p><a href="{{ url_for('Home') }}">Back to Home</a></p>
+    </div>
+
+
+    <div class="row mt-5 align-items-center">
+
+
+        <div class="col-md-6">
+
+            <img src="{{ url_for('static', filename='images/canteen.jpg') }}"
+            class="img-fluid rounded-4 shadow">
+
+        </div>
+
+
+        <div class="col-md-6 mt-4 mt-md-0">
+
+            <h2 class="fw-bold">
+                About Our Canteen
+            </h2>
+
+            <p class="text-muted fs-5">
+
+                Shlok's Canteen provides delicious,
+                fresh and hygienic food prepared with
+                premium ingredients.
+
+            </p>
+
+
+            <p class="text-muted fs-5">
+
+                Our mission is to provide students and
+                customers with quick service and
+                quality meals at affordable prices.
+
+            </p>
+
+
+            <a href="{{ url_for('Menu') }}"
+            class="btn btn-success">
+                🍽 Explore Menu
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="row text-center mt-5">
+
+
+        <div class="col-md-4 mb-3">
+
+            <div class="about-card">
+
+                <h1>🍕</h1>
+
+                <h4>Fresh Food</h4>
+
+                <p>
+                    Made with fresh ingredients
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="col-md-4 mb-3">
+
+            <div class="about-card">
+
+                <h1>⚡</h1>
+
+                <h4>Fast Service</h4>
+
+                <p>
+                    Quick and easy ordering
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="col-md-4 mb-3">
+
+            <div class="about-card">
+
+                <h1>⭐</h1>
+
+                <h4>Best Quality</h4>
+
+                <p>
+                    Customer satisfaction first
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
 
 {% endblock %}
