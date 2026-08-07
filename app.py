@@ -1,6 +1,8 @@
-from flask import Flask, render_template, redirect,url_for, request
+from flask import Flask, render_template, redirect,url_for, request,session
 
 app = Flask(__name__)
+
+app.secret_key = "shlok_canteen_secret"
 
 # Shlok's Canteen Data --> Food Menu
 food_menu = [
@@ -34,6 +36,15 @@ daily_specials = [
 #cart
 cart = []
 orders = []
+
+cart = []
+orders = []
+
+users = {
+    "admin": "1234",
+    "student": "1111"
+}
+
 
 @app.route('/')
 def Home():
@@ -101,6 +112,28 @@ def decrease_quantity(item_name):
             break
 
     return redirect(url_for('cart_page'))
+
+@app.route('/login', methods=['GET','POST'])
+def login():
+
+    if request.method == "POST":
+
+        username = request.form['username']
+        password = request.form['password']
+
+        if username in users and users[username] == password:
+
+            session['user'] = username
+
+            return redirect(url_for('Home'))
+
+        else:
+            return render_template(
+                'login.html',
+                error="Invalid Username or Password"
+            )
+
+    return render_template('login.html')
 
 @app.route('/about')
 def About_us():
