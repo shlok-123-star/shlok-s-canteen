@@ -102,7 +102,7 @@ def decrease_quantity(item_name):
 
     return redirect(url_for('cart_page'))
 
-@app.route('/About us')
+@app.route('/about')
 def About_us():
     return render_template('About_us.html')
 
