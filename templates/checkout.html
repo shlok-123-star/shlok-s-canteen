@@ -1,49 +1,139 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Checkout</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
+{% extends 'Base.html' %}
 
-<body>
+{% block title %}Checkout{% endblock %}
 
-<h1>Checkout Page</h1>
+{% block content %}
 
-<h2>Your Order</h2>
+<div class="container mt-5">
 
-<p>Food: Veg Burger</p>
-<p>Quantity: 2</p>
-<p>Total: ₹100</p>
+<h1 class="text-center fw-bold mb-5">
+💳 Checkout
+</h1>
+
+
+<div class="row">
+
+
+<!-- Customer Details -->
+
+<div class="col-lg-7">
+
+<div class="checkout-card">
+
+
+<h3 class="mb-4">
+👤 Customer Details
+</h3>
+
 
 <form action="{{ url_for('place_order') }}" method="POST">
-<label>Customer Name:</label>
-<input type="text" name="customer_name" required>
 
-<br><br>
 
-<label>Table Number:</label>
-<input type="number" name="table_number" required>
+<label class="form-label">
+Customer Name
+</label>
 
-<br><br>
+<input type="text"
+name="customer_name"
+class="form-control mb-3"
+placeholder="Enter your name"
+required>
 
-<label>Select Payment Method:</label>
-<br>
 
-<input type="radio" name="payment" value="Cash on Counter" required>
-Cash on Counter
+<label class="form-label">
+Table Number
+</label>
 
-<br>
+<input type="number"
+name="table_number"
+class="form-control mb-3"
+placeholder="Enter table number"
+required>
 
-<input type="radio" name="payment" value="UPI">
-UPI
 
-<br><br>
+<label class="form-label">
+Payment Method
+</label>
 
-<button type="submit">
-Place Order
+
+<select name="payment"
+class="form-control mb-4">
+
+<option>Cash</option>
+<option>UPI</option>
+<option>Card</option>
+
+</select>
+
+
+<button class="btn btn-success w-100">
+Place Order ✅
 </button>
+
 
 </form>
 
-</body>
-</html>
+
+</div>
+
+</div>
+
+
+
+<!-- Order Summary -->
+
+<div class="col-lg-5">
+
+
+<div class="checkout-summary">
+
+
+<h3>
+🛒 Order Summary
+</h3>
+
+<hr>
+
+
+{% for item in cart %}
+
+<div class="d-flex justify-content-between mb-3">
+
+<span>
+{{ item.name }} 
+(x{{ item.quantity }})
+</span>
+
+
+<span>
+₹{{ item.price * item.quantity }}
+</span>
+
+
+</div>
+
+{% endfor %}
+
+
+<hr>
+
+
+<h3 class="text-success">
+
+Total ₹{{ total }}
+
+</h3>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+{% endblock %}

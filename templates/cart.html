@@ -6,122 +6,148 @@
 
 <div class="container mt-5">
 
-    <h1 class="text-center fw-bold mb-5">
-        🛒 Your Cart
-    </h1>
+<h1 class="text-center fw-bold mb-5">
+🛒 Your Cart
+</h1>
 
 
-    {% if cart %}
+{% if cart %}
 
-    <div class="row">
+<div class="row">
 
-        <div class="col-lg-8">
+<div class="col-lg-8">
 
-            {% for item in cart %}
+{% for item in cart %}
 
-            <div class="cart-card mb-3">
+<div class="cart-box mb-4">
 
-                <div class="row align-items-center">
-
-                    <div class="col-md-3">
-
-                        <img src="{{ url_for('static', filename='images/' + item.image) }}"
-                        class="cart-img">
-
-                    </div>
+<div class="row align-items-center">
 
 
-                    <div class="col-md-5">
+<div class="col-md-3 text-center">
 
-                        <h4 class="fw-bold">
-                            {{ item.name }}
-                        </h4>
+<img src="{{ url_for('static', filename='images/' + item.image) }}"
+class="cart-image">
 
-                        <p class="text-success fw-bold">
-                            ₹{{ item.price }}
-                        </p>
-
-                    </div>
+</div>
 
 
-                    <div class="col-md-4 text-center">
+<div class="col-md-5">
 
-                        <a href="#" class="btn btn-outline-danger">
-                            Remove
-                        </a>
+<h4 class="fw-bold">
+{{ item.name }}
+</h4>
 
-                    </div>
-
-
-                </div>
-
-            </div>
-
-            {% endfor %}
-
-        </div>
+<p class="text-success fw-bold">
+₹{{ item.price }}
+</p>
 
 
-        <div class="col-lg-4">
+<div>
 
-            <div class="summary-card">
-
-                <h3>
-                    Order Summary
-                </h3>
-
-                <hr>
-
-                <h5>
-                    Total Items:
-                </h5>
-
-                <h2 class="text-success">
-                    ₹{{ total }}
-                </h2>
+<a href="{{ url_for('decrease_quantity', item_name=item.name) }}"
+class="btn btn-outline-danger btn-sm">
+−
+</a>
 
 
-                <a href="{{ url_for('checkout') }}"
-                class="btn btn-success w-100 mt-3">
-
-                    Proceed to Checkout 💳
-
-                </a>
+<span class="mx-3 fw-bold">
+{{ item.quantity }}
+</span>
 
 
-            </div>
+<a href="{{ url_for('increase_quantity', item_name=item.name) }}"
+class="btn btn-outline-success btn-sm">
++
+</a>
 
-        </div>
-
-
-    </div>
-
-
-    {% else %}
+</div>
 
 
-    <div class="empty-cart text-center">
-
-        <h2>
-            🛒 Your Cart is Empty
-        </h2>
-
-        <p>
-            Add delicious food from our menu.
-        </p>
+</div>
 
 
-        <a href="{{ url_for('Menu') }}"
-        class="btn btn-warning">
+<div class="col-md-4 text-center">
 
-            Explore Menu 🍔
-
-        </a>
-
-    </div>
+<h5>
+Subtotal:
+₹{{ item.price * item.quantity }}
+</h5>
 
 
-    {% endif %}
+<a href="{{ url_for('remove_from_cart', item_name=item.name) }}"
+class="btn btn-danger rounded-pill">
+
+Remove
+
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+
+<div class="col-lg-4">
+
+<div class="cart-summary">
+
+<h3>
+Order Summary
+</h3>
+
+<hr>
+
+<h4>
+Total:
+<span class="text-success">
+₹{{ total }}
+</span>
+</h4>
+
+
+<a href="{{ url_for('checkout') }}"
+class="btn btn-success w-100 mt-3">
+
+Proceed Checkout 💳
+
+</a>
+
+
+</div>
+
+</div>
+
+
+</div>
+
+
+{% else %}
+
+<div class="empty-cart text-center">
+
+<h2>
+🛒 Cart Empty
+</h2>
+
+<a href="{{ url_for('Menu') }}"
+class="btn btn-warning">
+
+Go To Menu 🍔
+
+</a>
+
+</div>
+
+
+{% endif %}
 
 
 </div>
