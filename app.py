@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect,url_for, request,session
+import sqlite3
 
 app = Flask(__name__)
 
@@ -40,14 +41,10 @@ orders = []
 cart = []
 orders = []
 
-users = {
-    "admin": "1234",
-    "student": "1111"
-}
-
 
 @app.route('/')
 def Home():
+
     return render_template(
         'Home.html',
         daily_specials=daily_specials,
@@ -115,9 +112,8 @@ def decrease_quantity(item_name):
 
             break
 
-    return redirect(url_for('cart_page'))
-
-@app.route('/login', methods=['GET','POST'])
+    return redirect(url_for('cart_page'))\
+    @app.route('/login', methods=['GET', 'POST'])
 def login():
 
     if request.method == "POST":
@@ -125,12 +121,21 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        if username in users and users[username] == password:
+        conn = sqlite3.connect("canteen.db")
+        cursor = conn.cursor()
 
+        cursor.execute(
+            "SELECT * FROM users WHERE username=? AND password=?",
+            (username, password)
+        )
+
+        user = cursor.fetchone()
+
+        conn.close()
+
+        if user:
             session['user'] = username
-
             return redirect(url_for('Home'))
-
         else:
             return render_template(
                 'login.html',
@@ -185,8 +190,7 @@ def admin():
     if 'user' not in session:
         return redirect(url_for('login'))
 
-    if session['user'] != "admin":
-        return "❌ Access Denied! Only Admin can access this page."
+    
 
     total_orders = len(orders)
 
@@ -202,5 +206,5 @@ def admin():
         total_revenue=total_revenue
     )
 
-if __name__== '__main__':
+if __name__== "__main__":
     app.run(debug=True)
