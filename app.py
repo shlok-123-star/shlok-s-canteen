@@ -112,10 +112,10 @@ def decrease_quantity(item_name):
 
             break
 
-    return redirect(url_for('cart_page'))\
-    @app.route('/login', methods=['GET', 'POST'])
+    return redirect(url_for('cart_page'))
+@app.route('/login',
+           methods=['GET', 'POST'])
 def login():
-
     if request.method == "POST":
 
         username = request.form['username']
