@@ -4,15 +4,23 @@
 
 {% block content %}
 
-<div class="hero">
-    <h1>🍔 Welcome to Shlok's Canteen</h1>
+<section class="hero">
+    <div class="hero-overlay">
+        <h1>🍔 Welcome to Shlok's Canteen</h1>
 
-    <p>Fresh Food • Fast Service • Best Quality</p>
+        <p>Fresh Food • Fast Service • Best Quality</p>
 
-    <a href="{{ url_for('Menu') }}" class="btn btn-warning btn-lg mt-3">
-        🍽 Order Now
-    </a>
-</div>
+        <div class="mt-4">
+            <a href="{{ url_for('Menu') }}" class="hero-btn">
+                🍽 View Menu
+            </a>
+
+            <a href="{{ url_for('Menu') }}" class="hero-btn second-btn">
+                🛒 Order Now
+            </a>
+        </div>
+    </div>
+</section>
 
 <div class="container mt-5">
 

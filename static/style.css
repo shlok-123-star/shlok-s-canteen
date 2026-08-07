@@ -274,3 +274,79 @@ img {
         padding: 12px;
     }
 }
+
+.hero {
+    height: 450px;
+    background:
+    linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+    url("/static/images/banner.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.hero-overlay {
+    color: white;
+}
+
+.hero-overlay h1 {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.hero-overlay p {
+    font-size: 22px;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    margin: 8px;
+    background: #0ddb4b;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+.second-btn {
+    background: orange;
+}
+
+.hero-btn:hover {
+    transform: scale(1.05);
+}
+
+.hero{
+    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+                url("/static/images/banner.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 500px;
+    border-radius: 20px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+
+    color:white;
+}
+
+.hero h1{
+    font-size:55px;
+    font-weight:bold;
+}
+
+.hero p{
+    font-size:22px;
+}
