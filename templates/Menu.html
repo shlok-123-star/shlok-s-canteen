@@ -4,109 +4,167 @@
 
 {% block content %}
 
-<div class="container mt-4">
+<div class="container mt-5">
 
-<h1 class="text-center mb-4">🍽 Our Menu</h1>
+    <h1 class="text-center fw-bold mb-4">
+        🍽 Our Premium Menu
+    </h1>
 
-<div class="row mb-4">
-    <div class="col-md-6 mx-auto">
-        <input type="text"
-               class="form-control form-control-lg"
-               placeholder="🔍 Search your favourite food...">
+    <!-- Search Box -->
+
+    <div class="row mb-4">
+        <div class="col-md-6 mx-auto">
+            <input type="text"
+                   class="form-control form-control-lg shadow"
+                   placeholder="🔍 Search your favourite food...">
+        </div>
     </div>
-</div>
 
-<h2>Fast Food</h2>
+    <!-- Category Buttons -->
 
-<div class="row">
+    <div class="text-center mb-5">
 
-{% for food in food_menu %}
+        <button class="btn btn-outline-success m-1">
+            🍔 Burgers
+        </button>
 
-<div class="col-md-3 mb-4">
+        <button class="btn btn-outline-danger m-1">
+            🍕 Pizza
+        </button>
 
-    <div class="card h-100 shadow">
+        <button class="btn btn-outline-warning m-1">
+            🍟 Fries
+        </button>
 
-        <img src="{{ url_for('static', filename='images/' + food.image) }}"
-             class="food-img"
-             alt="{{ food.name }}">
+        <button class="btn btn-outline-primary m-1">
+            🥤 Drinks
+        </button>
 
-        <div class="card-body">
+    </div>
 
-            <h5>{{ food.name }}</h5>
+    <!-- Fast Food -->
 
-            <h5 class="text-success fw-bold">
-    ₹{{ food.price }}
-</h5>
+    <h2 class="mb-4">🔥 Fast Food</h2>
 
-<span class="badge bg-success">
-    ⭐ 4.8
-</span>
+    <div class="row">
 
-            <a href="{{ url_for('add_to_cart', item_name=food.name) }}">
-                <button class="btn btn-success w-100 mt-3">
-    🛒 Add to Cart
-</button>
-            </a>
+        {% for food in food_menu %}
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card h-100 shadow">
+
+                <img src="{{ url_for('static', filename='images/' + food.image) }}"
+                     class="food-img"
+                     alt="{{ food.name }}">
+
+                <div class="card-body text-center">
+
+                    <span class="badge bg-danger mb-2">
+                        🔥 Best Seller
+                    </span>
+
+                    <h4 class="mt-2">
+                        {{ food.name }}
+                    </h4>
+
+                    <h3 class="text-success fw-bold">
+                        ₹{{ food.price }}
+                    </h3>
+
+                    <span class="badge bg-warning text-dark">
+                        ⭐ 4.8 (250+ Reviews)
+                    </span>
+
+                    <p class="text-muted mt-3">
+                        Freshly prepared with premium ingredients.
+                    </p>
+
+                    <a href="{{ url_for('add_to_cart', item_name=food.name) }}"
+                       class="btn btn-success w-100">
+                        🛒 Add to Cart
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
 
+        {% endfor %}
+
     </div>
 
-</div>
+    <!-- Drinks -->
 
-{% endfor %}
+    <h2 class="mt-5 mb-4">
+        🥤 Milkshakes & Drinks
+    </h2>
 
-</div>
+    <div class="row">
 
-<h2 class="mt-5">🥤 Milkshakes & Drinks</h2>
+        {% for drink in Milkshake_menu %}
 
-<div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
 
-{% for drink in Milkshake_menu %}
+            <div class="card h-100 shadow">
 
-<div class="col-md-3 mb-4">
+                <img src="{{ url_for('static', filename='images/' + drink.image) }}"
+                     class="food-img"
+                     alt="{{ drink.name }}">
 
-    <div class="card h-100 shadow">
+                <div class="card-body text-center">
 
-        <img src="{{ url_for('static', filename='images/' + drink.image) }}"
-             class="food-img"
-             alt="{{ drink.name }}">
+                    <span class="badge bg-info mb-2">
+                        🥤 Refreshing
+                    </span>
 
-        <div class="card-body">
+                    <h4 class="mt-2">
+                        {{ drink.name }}
+                    </h4>
 
-            <h5>{{ drink.name }}</h5>
+                    <h3 class="text-success fw-bold">
+                        ₹{{ drink.price }}
+                    </h3>
 
-            <p>₹{{ drink.price }}</p>
+                    <span class="badge bg-warning text-dark">
+                        ⭐ 4.7 (180+ Reviews)
+                    </span>
 
-            <a href="{{ url_for('add_to_cart', item_name=drink.name) }}">
-                <button class="btn btn-success w-100">
-                    🛒 Add to Cart
-                </button>
-            </a>
+                    <p class="text-muted mt-3">
+                        Fresh • Chilled • Delicious
+                    </p>
+
+                    <a href="{{ url_for('add_to_cart', item_name=drink.name) }}"
+                       class="btn btn-primary w-100">
+                        🛒 Add to Cart
+                    </a>
+
+                </div>
+
+            </div>
 
         </div>
 
+        {% endfor %}
+
     </div>
 
-</div>
+    <hr class="my-5">
 
-{% endfor %}
+    <div class="text-center">
 
-</div>
+        <a href="{{ url_for('cart_page') }}"
+           class="btn btn-warning btn-lg me-2">
+            🛒 View Cart
+        </a>
 
-<br><br>
+        <a href="{{ url_for('admin') }}"
+           class="btn btn-dark btn-lg">
+            📊 Admin Dashboard
+        </a>
 
-<div class="text-center">
-
-    <a href="{{ url_for('cart_page') }}" class="btn btn-warning">
-        🛒 View Cart
-    </a>
-
-    <a href="{{ url_for('admin') }}" class="btn btn-dark">
-        📋 Admin Dashboard
-    </a>
-
-</div>
+    </div>
 
 </div>
 
