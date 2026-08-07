@@ -48,7 +48,11 @@ users = {
 
 @app.route('/')
 def Home():
-    return render_template('Home.html', daily_specials=daily_specials)
+    return render_template(
+        'Home.html',
+        daily_specials=daily_specials,
+        user=session.get('user')
+    )
 
 @app.route('/Menu')
 def Menu():
@@ -134,6 +138,11 @@ def login():
             )
 
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('Home'))
 
 @app.route('/about')
 def About_us():

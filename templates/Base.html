@@ -51,11 +51,29 @@
                     <a class="nav-link" href="{{ url_for('admin') }}">📊 Admin</a>
                 </li>
 
-                <li class="nav-item">
+                {% if session.get('user') %}
+
+<li class="nav-item">
+    <span class="nav-link text-warning">
+        👋 Welcome, {{ session.get('user') }}
+    </span>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link" href="{{ url_for('logout') }}">
+        🚪 Logout
+    </a>
+</li>
+
+{% else %}
+
+<li class="nav-item">
     <a class="nav-link" href="{{ url_for('login') }}">
         🔐 Login
     </a>
 </li>
+
+{% endif %}
 
             </ul>
 
