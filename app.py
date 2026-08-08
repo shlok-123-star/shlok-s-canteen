@@ -237,16 +237,17 @@ def place_order():
     cursor = conn.cursor()
 
     cursor.execute("""
-        INSERT INTO orders
-        (user_id, customer_name, table_number, payment, total)
-        VALUES (?, ?, ?, ?, ?)
-    """, (
-        user_id,
-        customer_name,
-        table_number,
-        payment,
-        total
-    ))
+    INSERT INTO orders
+    (user_id, customer_name, table_number, payment, total, status)
+    VALUES (?, ?, ?, ?, ?, ?)
+""", (
+    user_id,
+    customer_name,
+    table_number,
+    payment,
+    total,
+    "Pending"
+))
 
     order_id = cursor.lastrowid
 
@@ -277,15 +278,26 @@ def place_order():
 @app.route('/admin')
 def admin():
 
-    if 'user' not in session:
+    if 'user_id' not in session:
         return redirect(url_for('login'))
 
     conn = sqlite3.connect("canteen.db")
     cursor = conn.cursor()
 
+    cursor.execute(
+        "SELECT role FROM users WHERE id = ?",
+        (session['user_id'],)
+    )
+
+    user = cursor.fetchone()
+
+    if not user or user[0] != 'admin':
+        conn.close()
+        return "Access Denied! Admin only."
+
     cursor.execute("""
         SELECT id, customer_name, table_number,
-               payment, total, order_date
+               payment, total, order_date,status
         FROM orders
         ORDER BY id DESC
     """)
@@ -309,6 +321,39 @@ def admin():
         total_orders=total_orders,
         total_revenue=total_revenue
     )
+
+@app.route('/update_order_status/<int:order_id>', methods=['POST'])
+def update_order_status(order_id):
+
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    conn = sqlite3.connect("canteen.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT role FROM users WHERE id = ?",
+        (session['user_id'],)
+    )
+
+    user = cursor.fetchone()
+
+    if not user or user[0] != 'admin':
+        conn.close()
+        return "Access Denied! Admin only."
+
+    status = request.form['status']
+
+    cursor.execute("""
+        UPDATE orders
+        SET status = ?
+        WHERE id = ?
+    """, (status, order_id))
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('admin'))
 
 if __name__== "__main__":
     app.run(debug=True)
