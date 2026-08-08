@@ -73,7 +73,6 @@ orders = []
 
 @app.route('/')
 def Home():
-
     return render_template(
         'Home.html',
         daily_specials=daily_specials,
@@ -181,6 +180,7 @@ def logout():
 
 @app.route('/my_orders')
 def my_orders():
+
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
@@ -191,7 +191,7 @@ def my_orders():
 
     cursor.execute("""
         SELECT id, customer_name, table_number,
-               payment, total, order_date
+               payment, total, order_date, status
         FROM orders
         WHERE user_id = ?
         ORDER BY id DESC
@@ -199,11 +199,34 @@ def my_orders():
 
     orders_data = cursor.fetchall()
 
+    orders = []
+
+    for order in orders_data:
+
+        cursor.execute("""
+            SELECT food_name, quantity, price
+            FROM order_items
+            WHERE order_id = ?
+        """, (order[0],))
+
+        items = cursor.fetchall()
+
+        orders.append({
+            "id": order[0],
+            "customer_name": order[1],
+            "table_number": order[2],
+            "payment": order[3],
+            "total": order[4],
+            "order_date": order[5],
+            "status": order[6],
+            "items": items
+        })
+
     conn.close()
 
     return render_template(
         'my_orders.html',
-        orders=orders_data
+        orders=orders
     )
 
 @app.route('/about')
@@ -297,14 +320,37 @@ def admin():
 
     cursor.execute("""
         SELECT id, customer_name, table_number,
-               payment, total, order_date,status
+               payment, total, order_date, status
         FROM orders
         ORDER BY id DESC
     """)
 
     orders_data = cursor.fetchall()
 
-    total_orders = len(orders_data)
+    orders = []
+
+    for order in orders_data:
+
+        cursor.execute("""
+            SELECT food_name, quantity, price
+            FROM order_items
+            WHERE order_id = ?
+        """, (order[0],))
+
+        items = cursor.fetchall()
+
+        orders.append({
+            "id": order[0],
+            "customer_name": order[1],
+            "table_number": order[2],
+            "payment": order[3],
+            "total": order[4],
+            "order_date": order[5],
+            "status": order[6],
+            "items": items
+        })
+
+    total_orders = len(orders)
 
     cursor.execute("""
         SELECT COALESCE(SUM(total), 0)
@@ -317,7 +363,7 @@ def admin():
 
     return render_template(
         'admin.html',
-        orders=orders_data,
+        orders=orders,
         total_orders=total_orders,
         total_revenue=total_revenue
     )

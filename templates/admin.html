@@ -1,6 +1,8 @@
-<!DOCTYPE html><html>
-<head>
-    <title>Admin Dashboard</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Dashboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet">
 
 </head><body class="bg-light"><div class="container mt-5"><h1 class="text-center mb-4">📋 Admin Dashboard</h1>
@@ -33,48 +35,96 @@
 
     <div class="card shadow mb-4 p-4">
 
-        <h4>Order #{{ order[0] }}</h4>
+        <h4>Order #{{ order.id }}</h4>
 
         <p>
-            <strong>Customer:</strong> {{ order[1] }}
+            <strong>Customer:</strong>
+            {{ order.customer_name }}
         </p>
 
         <p>
-            <strong>Table Number:</strong> {{ order[2] }}
+            <strong>Table Number:</strong>
+            {{ order.table_number }}
         </p>
 
         <p>
-            <strong>Payment:</strong> {{ order[3] }}
+            <strong>Payment:</strong>
+            {{ order.payment }}
         </p>
 
         <p>
-            <strong>Total:</strong> ₹{{ order[4] }}
-        </p>
-
-        <p>
-            <strong>Date:</strong> {{ order[5] }}
+            <strong>Date:</strong>
+            {{ order.order_date }}
         </p>
 
         <hr>
 
-        <h5>🔄 Update Order Status</h5>
+        <h5>🍽 Ordered Items</h5>
+
+        <ul class="list-group mb-3">
+
+            {% for item in order["items"] %}
+
+            <li class="list-group-item d-flex justify-content-between">
+
+                <span>
+                    {{ item[0] }} × {{ item[1] }}
+                </span>
+
+                <span>
+                    ₹{{ item[2] * item[1] }}
+                </span>
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+        <h4>
+            Total: ₹{{ order.total }}
+        </h4>
+
+        <hr>
+
+        <h5>🔄 Order Status</h5>
+
+        <p>
+            <strong>Current Status:</strong>
+            {{ order.status }}
+        </p>
 
         <form method="POST"
-              action="{{ url_for('update_order_status', order_id=order[0]) }}">
+              action="{{ url_for('update_order_status',
+                                order_id=order.id) }}">
 
-            <select name="status" class="form-select mb-3">
+            <select name="status"
+                    class="form-select mb-3">
 
-                <option value="Pending">Pending</option>
+                <option value="Pending"
+                    {% if order.status == 'Pending' %}selected{% endif %}>
+                    Pending
+                </option>
 
-                <option value="Preparing">Preparing</option>
+                <option value="Preparing"
+                    {% if order.status == 'Preparing' %}selected{% endif %}>
+                    Preparing
+                </option>
 
-                <option value="Ready">Ready</option>
+                <option value="Ready"
+                    {% if order.status == 'Ready' %}selected{% endif %}>
+                    Ready
+                </option>
 
-                <option value="Completed">Completed</option>
+                <option value="Completed"
+                    {% if order.status == 'Completed' %}selected{% endif %}>
+                    Completed
+                </option>
 
             </select>
 
-            <button type="submit" class="btn btn-primary">
+            <button type="submit"
+                    class="btn btn-primary">
                 Update Status
             </button>
 
@@ -87,7 +137,7 @@
 {% else %}
 
     <div class="alert alert-info text-center">
-        No Orders Yet
+        📭 No Orders Yet
     </div>
 
 {% endif %}

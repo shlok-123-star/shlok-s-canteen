@@ -1,51 +1,449 @@
 {% extends 'Base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Home | Shlok's canteen {% endblock %}
 
 {% block content %}
 
-<section class="hero">
-    <div class="hero-overlay">
+<!-- ================= HERO / BANNER ================= -->
 
-    
+<section class="hero-section">
 
-        <div class="mt-4">
-            <a href="{{ url_for('Menu') }}" class="hero-btn">
-                🍽 View Menu
+    <div class="hero-content">
+
+        <span class="hero-badge">
+            🍴 FRESHLY MADE DAILY!
+        </span>
+
+        <h1>
+            Shlok's <span>Canteen</span>
+        </h1>
+
+        <h3>
+            स्वादिष्ट. ताजे. दर्जेदार.
+        </h3>
+
+        <p>
+            Delicious food, quick service and easy online ordering
+            for students.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="{{ url_for('Menu') }}"
+               class="btn btn-warning btn-lg fw-bold px-4">
+                🍽️ View Menu
             </a>
 
-            <a href="{{ url_for('cart_page') }}" class="hero-btn second-btn">
+            <a href="{{ url_for('cart_page') }}"
+               class="btn btn-outline-light btn-lg fw-bold px-4">
                 🛒 Order Now
             </a>
+
         </div>
 
     </div>
+
 </section>
-        
+
+
+<!-- ================= QUICK STATS ================= -->
+
+<section class="container stats-section">
+
+    <div class="row g-3 text-center">
+
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon">🍔</div>
+                <h3>20+</h3>
+                <p>Food Items</p>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <h3>Fast</h3>
+                <p>Service</p>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon">👨‍🎓</div>
+                <h3>Student</h3>
+                <p>Friendly</p>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <h3>Quality</h3>
+                <p>Food</p>
+            </div>
+        </div>
+
     </div>
+
 </section>
 
-<div class="container mt-5">
 
-    <h2 class="text-center mb-4">🔥 Today's Specials</h2>
+<!-- ================= FEATURES ================= -->
 
-    <div class="row">
+<section class="container py-5">
 
-        {% for food in daily_specials %}
+    <div class="section-heading text-center">
 
-        <div class="col-md-4 mb-4">
+        <span>✨ WHY CHOOSE US?</span>
 
-            <div class="card shadow h-100 text-center">
+        <h2>
+            Everything You <strong>Need</strong>
+        </h2>
 
-                <div class="card-body">
+        <p>
+            A simple and smart way to order food from your canteen.
+        </p>
 
-                    <h4>{{ food.name }}</h4>
+    </div>
 
-                    <h3 class="text-success">₹{{ food.price }}</h3>
 
-                    <button class="btn btn-success mt-3">
-                        Order Now
-                    </button>
+    <div class="row g-4 mt-3">
+
+        <div class="col-md-4">
+
+            <div class="feature-card premium-card">
+
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <h4>Fast Service</h4>
+
+                <p>
+                    Order your food online and avoid waiting
+                    in a long queue.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="feature-card premium-card">
+
+                <div class="feature-icon">
+                    🥗
+                </div>
+
+                <h4>Fresh Food</h4>
+
+                <p>
+                    Enjoy freshly prepared and delicious food
+                    every day.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="feature-card premium-card">
+
+                <div class="feature-icon">
+                    📱
+                </div>
+
+                <h4>Easy Ordering</h4>
+
+                <p>
+                    Browse menu, add items to cart and place
+                    your order easily.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= TODAY'S SPECIALS ================= -->
+
+<section class="special-section">
+
+    <div class="container">
+
+        <div class="section-heading text-center">
+
+            <span>🔥 TODAY'S PICKS</span>
+
+            <h2>
+                Today's <strong>Specials</strong>
+            </h2>
+
+            <p>
+                Don't miss today's delicious special dishes!
+            </p>
+
+        </div>
+
+
+        <div class="row g-4 mt-3">
+
+            {% for item in daily_specials %}
+
+            <div class="col-md-4">
+
+                <div class="special-card professional-special">
+
+                    <div class="special-food-icon">
+                        🍽️
+                    </div>
+
+                    <div class="special-info">
+
+                        <span class="special-label">
+                            🔥 SPECIAL
+                        </span>
+
+                        <h4>
+                            {{ item.name }}
+                        </h4>
+
+                        <p>
+                            Freshly prepared and full of flavour.
+                        </p>
+
+                        <div class="special-bottom">
+
+                            <span class="price">
+                                ₹{{ item.price }}
+                            </span>
+
+                            <a href="{{ url_for(
+                                'add_to_cart',
+                                item_name=item.name
+                            ) }}"
+                            class="btn btn-dark">
+
+                                + Add to Cart
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= POPULAR FOOD ================= -->
+
+<section class="container py-5">
+
+    <div class="section-heading text-center">
+
+        <span>❤️ STUDENT FAVOURITES</span>
+
+        <h2>
+            Popular <strong>Food</strong>
+        </h2>
+
+        <p>
+            Some of the favourites from our canteen menu.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4 mt-3">
+
+        <div class="col-md-4">
+
+            <div class="popular-card">
+
+                <div class="popular-icon">
+                    🍔
+                </div>
+
+                <div>
+                    <h4>Veg Burger</h4>
+                    <p>Fresh & delicious burger</p>
+                </div>
+
+                <span>₹50</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="popular-card">
+
+                <div class="popular-icon">
+                    🍕
+                </div>
+
+                <div>
+                    <h4>Pizza</h4>
+                    <p>Cheesy and tasty pizza</p>
+                </div>
+
+                <span>₹80</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="popular-card">
+
+                <div class="popular-icon">
+                    🍟
+                </div>
+
+                <div>
+                    <h4>French Fries</h4>
+                    <p>Crispy golden fries</p>
+                </div>
+
+                <span>₹60</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="text-center mt-4">
+
+        <a href="{{ url_for('Menu') }}"
+           class="btn btn-dark btn-lg px-5">
+
+            View Full Menu →
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section class="how-section">
+
+    <div class="container py-5">
+
+        <div class="section-heading text-center">
+
+            <span>🚀 SIMPLE PROCESS</span>
+
+            <h2>
+                How It <strong>Works</strong>
+            </h2>
+
+            <p>
+                Ordering food has never been easier.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4 mt-4 text-center">
+
+            <div class="col-md-3">
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <h5>Login</h5>
+
+                    <p>
+                        Login to your account.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <h5>Choose Food</h5>
+
+                    <p>
+                        Select your favourite food.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <h5>Add to Cart</h5>
+
+                    <p>
+                        Add items to your cart.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <h5>Enjoy 🎉</h5>
+
+                    <p>
+                        Place your order and enjoy!
+                    </p>
 
                 </div>
 
@@ -53,36 +451,39 @@
 
         </div>
 
-        {% endfor %}
+    </div>
+
+</section>
+
+
+<!-- ================= FINAL CTA ================= -->
+
+<section class="home-cta">
+
+    <div class="container text-center">
+
+        <div class="cta-icon">
+            🍔
+        </div>
+
+        <h2>
+            Hungry? Let's Fix That! 😋
+        </h2>
+
+        <p>
+            Your favourite food is just one click away.
+        </p>
+
+        <a href="{{ url_for('Menu') }}"
+           class="btn btn-warning btn-lg fw-bold px-5">
+
+            🍽️ Order Food Now
+
+        </a>
 
     </div>
 
-</div>
+</section>
 
-<div class="container mt-5">
-
-    <div class="row text-center">
-
-        <div class="col-md-4">
-            <h2>🚚</h2>
-            <h4>Fast Delivery</h4>
-            <p>Food delivered within 15–20 minutes.</p>
-        </div>
-
-        <div class="col-md-4">
-            <h2>🍔</h2>
-            <h4>Fresh Food</h4>
-            <p>Prepared fresh after every order.</p>
-        </div>
-
-        <div class="col-md-4">
-            <h2>💳</h2>
-            <h4>Easy Payment</h4>
-            <p>UPI • Cash • Card Supported.</p>
-        </div>
-
-    </div>
-
-</div>
 
 {% endblock %}
