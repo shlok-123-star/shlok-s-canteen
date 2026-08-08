@@ -179,6 +179,33 @@ def logout():
     session.pop('user', None)
     return redirect(url_for('Home'))
 
+@app.route('/my_orders')
+def my_orders():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+
+    conn = sqlite3.connect("canteen.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id, customer_name, table_number,
+               payment, total, order_date
+        FROM orders
+        WHERE user_id = ?
+        ORDER BY id DESC
+    """, (user_id,))
+
+    orders_data = cursor.fetchall()
+
+    conn.close()
+
+    return render_template(
+        'my_orders.html',
+        orders=orders_data
+    )
+
 @app.route('/about')
 def About_us():
     return render_template('About_us.html')
@@ -199,12 +226,44 @@ def place_order():
     table_number = request.form['table_number']
     payment = request.form['payment']
 
-    orders.append({
-        "customer_name": customer_name,
-        "table_number": table_number,
-        "payment": payment,
-        "items": cart.copy()
-    })
+    total = sum(
+        item["price"] * item["quantity"]
+        for item in cart
+    )
+
+    user_id = session.get('user_id')
+
+    conn = sqlite3.connect("canteen.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO orders
+        (user_id, customer_name, table_number, payment, total)
+        VALUES (?, ?, ?, ?, ?)
+    """, (
+        user_id,
+        customer_name,
+        table_number,
+        payment,
+        total
+    ))
+
+    order_id = cursor.lastrowid
+
+    for item in cart:
+        cursor.execute("""
+            INSERT INTO order_items
+            (order_id, food_name, quantity, price)
+            VALUES (?, ?, ?, ?)
+        """, (
+            order_id,
+            item["name"],
+            item["quantity"],
+            item["price"]
+        ))
+
+    conn.commit()
+    conn.close()
 
     cart.clear()
 
@@ -212,7 +271,8 @@ def place_order():
         'order_success.html',
         customer_name=customer_name,
         table_number=table_number,
-        payment=payment
+        payment=payment,
+        total=total
     )
 @app.route('/admin')
 def admin():
