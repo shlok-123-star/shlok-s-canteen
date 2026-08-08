@@ -1,7 +1,36 @@
 from flask import Flask, render_template, redirect,url_for, request,session
 import sqlite3
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    if request.method == "POST":
+        name = request.form["name"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        hashed_password = generate_password_hash(password)
+
+        conn = sqlite3.connect("canteen.db")
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute(
+                "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+                (name, email, hashed_password)
+            )
+            conn.commit()
+        except sqlite3.IntegrityError:
+            conn.close()
+            return "Email already registered!"
+
+        conn.close()
+
+        return "Registration successful!"
+
+    return render_template("signup.html")
 
 app.secret_key = "shlok_canteen_secret"
 
