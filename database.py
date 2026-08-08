@@ -1,27 +1,25 @@
 import sqlite3
 
-conn = sqlite3.connect("canteen.db")
-cursor = conn.cursor()
+def create_database():
+    conn = sqlite3.connect("canteen.db")
+    cursor = conn.cursor()
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT UNIQUE,
-    password TEXT
-)
-""")
+    # Old users table delete
+    cursor.execute("DROP TABLE IF EXISTS users")
 
-cursor.execute("""
-INSERT OR IGNORE INTO users(username, password)
-VALUES ('admin', '1234')
-""")
+    # New users table
+    cursor.execute("""
+        CREATE TABLE users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    """)
 
-cursor.execute("""
-INSERT OR IGNORE INTO users(username, password)
-VALUES ('student', '1111')
-""")
+    conn.commit()
+    conn.close()
 
-conn.commit()
-conn.close()
-
-print("Database Created Successfully")
+if __name__ == "__main__":
+    create_database()
+    print("Database created successfully!")

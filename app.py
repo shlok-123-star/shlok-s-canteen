@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect,url_for, request,session
 import sqlite3
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash,check_password_hash
 
 app = Flask(__name__)
 
@@ -142,33 +142,34 @@ def decrease_quantity(item_name):
             break
 
     return redirect(url_for('cart_page'))
-@app.route('/login',
-           methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
 
-        username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
 
         conn = sqlite3.connect("canteen.db")
         cursor = conn.cursor()
 
         cursor.execute(
-            "SELECT * FROM users WHERE username=? AND password=?",
-            (username, password)
+            "SELECT id, name, email, password FROM users WHERE email=?",
+            (email,)
         )
 
         user = cursor.fetchone()
-
         conn.close()
 
-        if user:
-            session['user'] = username
+        if user and check_password_hash(user[3], password):
+            session['user'] = user[1]
+            session['user_id'] = user[0]
+
             return redirect(url_for('Home'))
+
         else:
             return render_template(
                 'login.html',
-                error="Invalid Username or Password"
+                error="Invalid Email or Password"
             )
 
     return render_template('login.html')
