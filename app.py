@@ -280,18 +280,32 @@ def admin():
     if 'user' not in session:
         return redirect(url_for('login'))
 
-    
+    conn = sqlite3.connect("canteen.db")
+    cursor = conn.cursor()
 
-    total_orders = len(orders)
+    cursor.execute("""
+        SELECT id, customer_name, table_number,
+               payment, total, order_date
+        FROM orders
+        ORDER BY id DESC
+    """)
 
-    total_revenue = 0
-    for order in orders:
-        for item in order["items"]:
-            total_revenue += item["price"] * item["quantity"]
+    orders_data = cursor.fetchall()
+
+    total_orders = len(orders_data)
+
+    cursor.execute("""
+        SELECT COALESCE(SUM(total), 0)
+        FROM orders
+    """)
+
+    total_revenue = cursor.fetchone()[0]
+
+    conn.close()
 
     return render_template(
         'admin.html',
-        orders=orders,
+        orders=orders_data,
         total_orders=total_orders,
         total_revenue=total_revenue
     )
